@@ -26,29 +26,7 @@ const LoginScreen = (props: Props) => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const handleSubmit =  () => {
-
-    console.log(email, password)
-    // dispatch(login({email, password}))
-    fetch('http://192.168.3.42/love-option/public/authentication_token',{
-      method:'POST',
-      headers:{
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({email, password})
-    }).then((res)=>{
-      console.log(res);
-      return res.text()
-    }).then((data)=>{
-      console.log(data)
-    })
-    // fetch('http://10.0.2.2/love-option/public/authentication_token',{
-    //   method:'GET',
-    // }).then((res)=>{
-    //   console.log(res);
-    //   return res.text()
-    // }).then((data)=>{
-    //   console.log(data)
-    // })
+    dispatch(login({email, password}))
   }
 
 
@@ -61,7 +39,7 @@ const LoginScreen = (props: Props) => {
       <VStack space={3}>
         <FormControl>
           <FormControl.Label style={{left:20}}>Email ID</FormControl.Label>
-          <TextInput placeholder='example@gmail.com' onChangeText={(e) => setEmail(e)} placeholderTextColor="white" style={{backgroundColor: "#23252F", borderColor:"#FE5870",borderRadius:50, borderWidth:2, paddingLeft:20}}/>
+          <TextInput placeholder='example@gmail.com' onChangeText={(e) => setEmail(e)} placeholderTextColor="white" style={{backgroundColor: "#23252F", borderColor:"#FE5870",borderRadius:50, borderWidth:2, paddingLeft:20, color:'white'}}/>
         </FormControl>
         <FormControl>
           <FormControl.Label style={{left:20}}>Password</FormControl.Label>
@@ -70,11 +48,7 @@ const LoginScreen = (props: Props) => {
         <Button 
           mt="1" 
           style={{backgroundColor: '#FD6B80', borderColor:"#FE5870",borderRadius:50, marginTop:25}}
-          onPress={() => {
-            handleSubmit()
-          }}      
-        >
-          
+          onPress={() => {handleSubmit()}}>
           <Text style={{color: '#FFFFFF'}}>Sign in</Text>
         </Button>
         <HStack mt="2" justifyContent="center">
