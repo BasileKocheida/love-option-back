@@ -28,12 +28,17 @@ const AuthSlice = createSlice({
       state.isAuthenticated = action.payload
     },
     login: (state, action: PayloadAction<any>) => {
-      authService.login(action.payload.email, action.payload.password)
-        .then((response: any) => {
-          console.log(response);
-        }).catch((err: any) => {
-          throw new Error("Error AuthService Login");
-        }) 
+      console.log(action);
+      console.log(action.payload);
+      authService.login(action.payload.email, action.payload.password).then((response: any) => {
+          console.log(response)
+          return response.text()
+        }).then((data)=>{
+          console.log(data)
+        })
+        .catch((err)=>{
+          console.error(err)
+        })
     }
   }
 })

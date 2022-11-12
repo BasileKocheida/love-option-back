@@ -1,24 +1,23 @@
 import { API } from "../utils"
 import axios, {AxiosResponse} from 'axios';
 
-
 class AuthService {
     constructor(
-        private loginBaseUrl = '/authentication_token'
+        private loginBaseUrl = 'https://jsonplaceholder.typicode.com/todos/1'
     )
     {}
 
-    login(email: string, password: string){
+    async login(email: string, password: string){
         try {
+            console.log(this.loginBaseUrl);
+            // return API.post(this.loginBaseUrl, {email, password})
             return fetch(this.loginBaseUrl, {
-                method:'POST',
-                headers: {
-                    'Content-Type':	'application/json'
-                },
-                body: JSON.stringify({email, password})
+                method:'GET',
+                // body: JSON.stringify({email, password})
             })
         } catch(error) {
-            throw new Error("Error AuthService Login");   
+            console.log(error)
+            throw new Error("Error AuthService Login " + JSON.stringify({...error})); 
         }
     }
 

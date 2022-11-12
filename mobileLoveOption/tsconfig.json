@@ -5,7 +5,10 @@
       "esModuleInterop": false,
       "isolatedModules": true,
       "jsx": "react-native",
-      "lib": ["es2017"],
+      "lib": 
+        ["es2017",
+          "dom"
+        ],
       "types": ["react-native", "jest"],
       "moduleResolution": "node",
       "noEmit": true,

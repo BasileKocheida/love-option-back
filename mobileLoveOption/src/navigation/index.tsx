@@ -4,48 +4,33 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {Icon} from 'native-base';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import LoginScreen from '../screens/LoginScreen';
+import RegisterScreen from '../screens/RegisterScreen';
 import HomeScreen from '../screens/Home';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import DailyMatchScreen from '../screens/DailyMatchScreen';
+import MatchesListScreen from '../screens/MatchesListScreen';
 
-const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
-function RouteNavigation() {
+const HomeNavigator = () => {
   return (
-    <Tab.Navigator
-      screenOptions={{
-        headerShown: false,
-        tabBarStyle: {backgroundColor: 'black'},
-        tabBarLabelStyle: {color: '#fff'},
-      }}>
-      <Tab.Screen
-        options={{
-          tabBarLabel: 'home',
-          tabBarIcon: ({focused}: any) => (
-            <Ionicons
-              name={focused ? 'home' : 'home-outline'}
-              size={20}
-              color={'#fff'}
-            />
-          ),
-        }}
-        name="Home"
+    <Stack.Navigator > 
+       <Stack.Screen
+        name="HomeScreen"
         component={HomeScreen}
       />
-      <Tab.Screen
-        options={{
-          tabBarLabel: 'Login',
-          tabBarIcon: ({focused}: any) => (
-            <Ionicons
-              name={focused ? 'log-in' : 'log-in-outline'}
-              size={20}
-              color={'#fff'}
-            />
-          ),
-        }}
-        name="Login"
-        component={LoginScreen}
+       <Stack.Screen
+        name="DailyMatchScreen"
+        component={DailyMatchScreen}
       />
-    </Tab.Navigator>
+      <Stack.Screen
+        name="MatchesListScreen"
+        component={MatchesListScreen}
+      />
+    </Stack.Navigator>
   );
 }
+export {HomeNavigator};
 
-export default RouteNavigation;
+// Ajouter une autre stack si besoin
