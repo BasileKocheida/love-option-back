@@ -40,7 +40,7 @@ export default function AppBar(props: Props) {
         </Button>
       )}
       <HStack alignItems={'center'} justifyContent={'flex-start'}>
-        <Heading color={'#fff'}>{props.ScreenName ?? ''}</Heading>
+        <Heading color={'#fff'}>{props.ScreenName ?? 'LoveOption'}</Heading>
       </HStack>
       <Button variant={'outline'}>
         <Ionicons name={'home'} size={20} color={'#fff'} />
