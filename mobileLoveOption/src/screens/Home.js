@@ -1,21 +1,22 @@
 import React from "react";
-import { Button, Text, View } from "native-base";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Box, Button, Text, View } from "native-base";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { TouchableOpacity} from "react-native";
+import { primaryColor } from "../utils/colors";
+import AppBar from "../components/AppBar/AppBar";
 
-const Tab = createBottomTabNavigator();
-
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation, props }) {
+  
     return (
       <View style={{flex: 1, backgroundColor: "black"}}>
-        <Text style={{margin: 20}}>Home</Text>
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <AppBar navigation={navigation} goBack={false} />
+        <Text m={5} color={"white"}>Home</Text>
+        <Box alignItems={'center'} justifyContent={'center'}>
           <View style={{flexDirection: "row" }}>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#23252F", margin: 5, height: 150, width: 150, borderRadius: 15, borderWidth: 2, borderColor: "#FF4D67" }}>
               <TouchableOpacity
-                title="Go to Register"
-                value="Register"
+                title="Go to DailyMatch"
+                value="DailyMatch"
                 onPress={() => navigation.navigate('DailyMatchScreen')}
               >
                 <View style={{ backgroundColor: 'rgba(255, 77, 103, 0.25)', borderRadius: 50, margin: 15, padding: 10, justifyContent: 'center' }}>
@@ -23,16 +24,16 @@ export default function HomeScreen({ navigation }) {
                     style={{ textAlign: 'center' }}
                     name={'heart'}
                     size={50}
-                    color={'#FF4D67'}
+                    color={primaryColor}
                   />
                 </View>
-                <Text style={{ color: "#FF4D67", textAlign: "center" }}>Match of the day</Text>
+                <Text style={{ color: primaryColor, textAlign: "center" }}>Match of the day</Text>
               </TouchableOpacity>
             </View>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: "#23252F", margin: 5, height: 150, width: 150, borderRadius: 15, borderWidth: 2, borderColor: "#FF4D67" }}>
               <TouchableOpacity
-                title="Go to Login"
-                value="Login"
+                title="Go to Matches list"
+                value="MatchList"
                 onPress={() => navigation.navigate('MatchesListScreen')}
               >
                 <View style={{ backgroundColor: 'rgba(255, 77, 103, 0.25)', borderRadius: 50, margin: 15, padding: 10, justifyContent: 'center' }}>
@@ -75,7 +76,8 @@ export default function HomeScreen({ navigation }) {
               </TouchableOpacity>
             </View>
           </View>
-        </View>
+        </Box>
       </View>
     );
-}
+  }
+// }

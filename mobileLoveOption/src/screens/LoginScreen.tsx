@@ -1,34 +1,52 @@
+import { Link } from '@react-navigation/native';
 import {
   Box,
   Center,
-  Heading,
   VStack,
   FormControl,
-  Input,
-  Link,
   Button,
   HStack,
   Text,
   Image
 } from 'native-base';
-import React, { useState } from 'react';
-import { TextInput } from 'react-native';
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react';
+import { TextInput, TouchableOpacity } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../reducers/AuthSlice';
+import { authService } from '../services/AuthServices';
+import { store } from '../store/store';
 import { API } from '../utils';
+import HomeScreen from './Home';
 
 interface Props {
   navigation: any
 }
+
 const LoginScreen = (props: Props) => {
   
-  const dispatch = useDispatch()
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
-  const handleSubmit =  () => {
-    dispatch(login({email, password}))
+  //utiliser le useSelector pour observer/surveiller mon state (avertir à chaque changement de variable)
+  const isAuthenticated = useSelector<any>((state)=>state.auth.isAuthenticated)
+
+
+  const handleSubmit =  async () => {
+
+    const result = await store.dispatch(login({email, password}))
+    //console.log('PPL', result);
+    
   }
 
+  //Surveille le state, le déclenche au 1 er render de loginScreen et quand isAuthenticated change
+
+  useEffect(()=>{
+    //naviguer vers la page d'accueil
+    if (isAuthenticated == true) {
+      props.navigation.navigate('MainScreen', {
+        screen: 'HomeScreen'
+      })
+    }
+  }, [isAuthenticated])
 
   return (
     <Center w="100%" h="100%" style={{backgroundColor: '#1A1B22', paddingTop: 50}}>
@@ -52,14 +70,17 @@ const LoginScreen = (props: Props) => {
           <Text style={{color: '#FFFFFF'}}>Sign in</Text>
         </Button>
         <HStack mt="2" justifyContent="center">
-          <Text
-            fontSize="sm"
-            color="white"
-            _dark={{
-              color: 'warmGray.200',
-            }}>
-            Haven't account.{'Mettre lien vers RegisterScreen'}
-          </Text>
+            <TouchableOpacity
+             onPress={() => props.navigation.navigate('RegisterScreen')}>
+              <Text
+                fontSize="sm"
+                color="white"
+                textDecorationLine='underline'
+                _dark={{
+                  color: 'warmGray.200',
+                }}>Haven't account ?
+              </Text>   
+            </TouchableOpacity>
         </HStack>
       </VStack>
     </Box>

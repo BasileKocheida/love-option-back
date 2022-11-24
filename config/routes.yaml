@@ -2,6 +2,11 @@ controllers:
     resource: ../src/Controller/
     type: attribute
 
+
 authentication_token:
     path: /authentication_token
     methods: ['POST']
+
+me:
+    path: /me
+    methods: ['GET']

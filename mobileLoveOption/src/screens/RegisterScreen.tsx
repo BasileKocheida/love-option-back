@@ -11,18 +11,20 @@ import {
     Text,
     Image
   } from 'native-base';
-  import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { TextInput } from 'react-native';
-  import { useDispatch } from 'react-redux'
-  import { login } from '../reducers/AuthSlice';
+import { useDispatch } from 'react-redux'
+import { register } from '../reducers/RegisterSlice';
+import { store } from '../store/store';
+
   
   const RegisterScreen = () => {
     const dispatch = useDispatch()
     const [email, setEmail] = useState<string>('')
-    const [password, setPassword] = useState<string>('')
+    const [plainPassword, setPassword] = useState<string>('')
   
-    const handleSubmit =  () => {
-    //   dispatch(login({email, password}))
+    const handleSubmit =  async() => {
+      const result = await store.dispatch(register({email, plainPassword}))
     }
   
     return (
@@ -34,14 +36,17 @@ import { TextInput } from 'react-native';
           <VStack space={3}>
             <FormControl>
               <FormControl.Label style={{left:20}}>Email ID</FormControl.Label>
-              <TextInput placeholder='example@gmail.com' onChangeText={(e) => setEmail(e)} placeholderTextColor="white" style={{backgroundColor: "#23252F", borderColor:"#FE5870",borderRadius:50, borderWidth:2, paddingLeft:20}}/>
+              <TextInput placeholder='example@gmail.com' onChangeText={(e) => setEmail(e)} placeholderTextColor="white"  style={{backgroundColor: "#23252F", borderColor:"#FE5870",borderRadius:50, borderWidth:2, paddingLeft:20, color:'white'}}/>
             </FormControl>
             <FormControl>
               <FormControl.Label style={{left:20}}>Password</FormControl.Label>
-              <TextInput placeholder='Password' onChangeText={(e) => setPassword(e)} placeholderTextColor="white" style={{backgroundColor: "#23252F", borderColor:"#FE5870",borderRadius:50, borderWidth:2, paddingLeft:20}}/>
+              <TextInput placeholder='Password' onChangeText={(e) => setPassword(e)} placeholderTextColor="white" style={{backgroundColor: "#23252F", borderColor:"#FE5870",borderRadius:50, borderWidth:2, paddingLeft:20, color:'white'}}/>
             </FormControl>
-            <Button mt="1" style={{backgroundColor: '#FD6B80', borderColor:"#FE5870",borderRadius:50, marginTop:25}}>
-              <Text style={{color: '#FFFFFF'}}>Sign up</Text>
+            <Button 
+              mt="1" 
+              style={{backgroundColor: '#FD6B80', borderColor:"#FE5870",borderRadius:50, marginTop:25}}
+              onPress={() => {handleSubmit()}}>
+              <Text style={{color: '#FFFFFF'}}>Sign in</Text>
             </Button>
             <HStack mt="2" justifyContent="center">
               <Text

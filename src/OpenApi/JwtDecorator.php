@@ -20,6 +20,12 @@ final class JwtDecorator implements OpenApiFactoryInterface
         $schemas = $openApi->getComponents()->getSchemas();
 
         $schemas['Token'] = new \ArrayObject([
+            'type' => 'https',
+            'scheme' => 'bearer',
+            'bearerFormat' => 'JWT'
+        ]);
+
+        $schemas['Token'] = new \ArrayObject([
             'type' => 'object',
             'properties' => [
                 'token' => [
