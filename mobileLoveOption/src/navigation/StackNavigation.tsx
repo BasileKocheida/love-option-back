@@ -12,6 +12,7 @@ import MatchesListScreen from '../screens/MatchesListScreen';
 import MatchScreen from '../screens/MatchScreen';
 import TabNavigator from './TabNavigation';
 import { useDispatch, useSelector } from 'react-redux'
+import ProfileScreen from "../screens/ProfileScreen";
 
 const Stack = createNativeStackNavigator();
 const StackNavigation= () => {
@@ -22,7 +23,7 @@ const StackNavigation= () => {
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-      }}> 
+      }}>
       {isAuthenticated === false ? (
         <>
           <Stack.Screen
@@ -36,10 +37,10 @@ const StackNavigation= () => {
           </>
       ): (
         <>
-          {/* <Stack.Screen
+          <Stack.Screen
             name="ProfilScreen"
-            component={TabNavigator}
-          /> */}
+            component={ProfileScreen}
+          />
           <Stack.Screen
             name="MainScreen"
             component={TabNavigator}

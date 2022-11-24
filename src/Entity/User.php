@@ -13,12 +13,17 @@ use App\Controller\UserController;
 #[ApiResource(
     collectionOperations: [
         'get',
-        'post',
+        'post' =>[
+            'controller' => [UserController::class, 'createUser'],
+            'deserialize' => false,
+            'path' => '/users',
+
+        ],
         'me' => [
             'pagination_enabled' => false,
             'path' => '/me',
             'method' => 'get',
-            'controller' => UserController::class,
+            'controller' => [UserController::class, 'me'],
             'read' => false,
             'security' => 'is_granted("ROLE_USER")',
         ],
@@ -31,7 +36,7 @@ use App\Controller\UserController;
     ],
     normalizationContext: ['groups' => 'user:read'],
     denormalizationContext: ['groups' => 'user:write']
-    
+
     )]
     #[ORM\Entity(repositoryClass: UserRepository::class)]
     class User implements UserInterface, PasswordAuthenticatedUserInterface

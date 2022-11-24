@@ -1,13 +1,14 @@
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios, {AxiosResponse} from 'axios';
+import * as process from "dotenv";
 
-const baseURL = "http://192.168.1.77/love-option/public";
-
+const baseURL = 'http://192.168.1.82:8000';
+console.log(baseURL, 'baseURL');
 const request = axios.create({
   baseURL: baseURL,
   headers: {
-    'accept': 'application/json',
+    accept: 'application/json',
     'Content-Type': 'application/json',
   },
 });
@@ -28,13 +29,13 @@ export interface ApiResponse extends Promise<any> {}
 // }
 
 export const storeLocalData = async (storage_Key: string, value: string) => {
-    try {
-      //const jsonValue = value;
-      await AsyncStorage.setItem(storage_Key, value);
-    } catch (e) {
-      // saving error
-      console.log(e);
-    }
+  try {
+    //const jsonValue = value;
+    await AsyncStorage.setItem(storage_Key, value);
+  } catch (e) {
+    // saving error
+    console.log(e);
+  }
 };
 
 export const removeLocalData = async (storage_Key: any) => {
@@ -42,5 +43,5 @@ export const removeLocalData = async (storage_Key: any) => {
 };
 
 export const getTokenFromStorage = async () => {
-  await AsyncStorage.getItem('token')
-}
+  await AsyncStorage.getItem('token');
+};
