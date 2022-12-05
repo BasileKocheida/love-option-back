@@ -12,7 +12,8 @@ import MatchesListScreen from '../screens/MatchesListScreen';
 import MatchScreen from '../screens/MatchScreen';
 import TabNavigator from './TabNavigation';
 import { useDispatch, useSelector } from 'react-redux'
-import ProfileScreen from "../screens/ProfileScreen";
+import ProfileAddInformationsScreen from '../screens/ProfileAddInformationsScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 const Stack = createNativeStackNavigator();
 const StackNavigation= () => {
@@ -34,7 +35,7 @@ const StackNavigation= () => {
             name="RegisterScreen"
             component={RegisterScreen}
           />
-          </>
+        </>
       ): (
         <>
           <Stack.Screen
@@ -44,6 +45,10 @@ const StackNavigation= () => {
           <Stack.Screen
             name="MainScreen"
             component={TabNavigator}
+          />
+          <Stack.Screen
+            name="ProfileAddInformationsScreen"
+            component={ProfileAddInformationsScreen}
           />
         </>
       )}

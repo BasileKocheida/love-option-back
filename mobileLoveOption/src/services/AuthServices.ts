@@ -1,7 +1,6 @@
 import {API, getTokenFromStorage} from '../utils';
 import axios, {AxiosResponse} from 'axios';
-import {acc} from 'react-native-reanimated';
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+
 
 class AuthService {
   constructor(
@@ -18,7 +17,7 @@ class AuthService {
       });
     } catch (error) {
       console.log(error);
-      throw new Error('Error AuthService Login ' + JSON.stringify({...error}));
+      throw new Error('Error AuthServices Login ' + JSON.stringify({...error}));
     }
   }
 

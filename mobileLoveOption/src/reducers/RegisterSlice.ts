@@ -8,7 +8,7 @@ import {login} from "./AuthSlice";
 
 interface SliceState {
   user: UserModel | null;
-  isLoading: boolean;
+  isRegistered: boolean;
   email: string | null;
   plainPassword: string | null;
 }
@@ -17,7 +17,7 @@ const initialState: SliceState = {
   user: null,
   email: null,
   plainPassword: null,
-  isLoading: false,
+  isRegistered: false,
   // token: null,
   // isAuthenticated: false,
 };
@@ -38,11 +38,11 @@ const RegisterSlice = createSlice({
     ) => {
       state.plainPassword = action.payload;
     },
-    setIsLoading: (
-      state: {isLoading: boolean},
+    setIsRegistered: (
+      state: {isRegistered: boolean},
       action: PayloadAction<boolean>,
     ) => {
-      state.isLoading = action.payload;
+      state.isRegistered = action.payload;
     },
     // setToken: (state: { token: any; }, action: PayloadAction<string>) => {
     //   state.token = action.payload
@@ -53,7 +53,7 @@ const RegisterSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(register.fulfilled, (state, action) => {
-      state.isLoading = false;
+      state.isRegistered = false;
       console.log('Register :', state);
     });
     // builder.addCase(getUser.fulfilled, (state, action) => {
@@ -63,7 +63,7 @@ const RegisterSlice = createSlice({
   },
 });
 
-export const {setEmail, setPlainPassword, setIsLoading} =
+export const {setEmail, setPlainPassword, setIsRegistered} =
   RegisterSlice.actions;
 export default RegisterSlice.reducer;
 
@@ -80,6 +80,9 @@ export const register = createAsyncThunk(
     if (response.status == 201) {
       thunkAPI.dispatch(
         login({email: data.email, password: data.plainPassword}),
+      );
+      thunkAPI.dispatch(
+        setIsRegistered(true)
       );
     }
 

@@ -20,6 +20,14 @@ export default function ProfileScreen(props: Props) {
         <Text color={'#fff'}>Profile Screen</Text>
         <Button
           w={300}
+          colorScheme={'success'}
+          onPress={async () => {
+            props.navigation.navigate('ProfileAddInformationsScreen');
+          }}>
+          <Text>Complétion du profil</Text>
+        </Button>
+        <Button
+          w={300}
           colorScheme={'danger'}
           onPress={async () => {
             await store.dispatch(logout());

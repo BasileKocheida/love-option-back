@@ -33,7 +33,7 @@ const LoginScreen = (props: Props) => {
   const handleSubmit =  async () => {
 
     const result = await store.dispatch(login({email, password}))
-    //console.log('PPL', result);
+    console.log('PPL', result);
     
   }
 
@@ -42,6 +42,8 @@ const LoginScreen = (props: Props) => {
   useEffect(()=>{
     //naviguer vers la page d'accueil
     if (isAuthenticated == true) {
+      console.log("la", isAuthenticated);
+      
       props.navigation.navigate('MainScreen', {
         screen: 'HomeScreen'
       })

@@ -1,9 +1,9 @@
 // import AsyncStorage from '@react-native-async-storage/async-storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios, {AxiosResponse} from 'axios';
-import * as process from "dotenv";
+// import * as process from "dotenv";
 
-const baseURL = 'http://192.168.1.82:8000';
+const baseURL = 'http://192.168.1.77/love-option/public';
 console.log(baseURL, 'baseURL');
 const request = axios.create({
   baseURL: baseURL,

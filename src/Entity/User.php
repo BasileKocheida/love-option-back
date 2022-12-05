@@ -65,6 +65,9 @@ use App\Controller\UserController;
     #[Groups(["user:write"])]
     private ?string $plainPassword = null;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Profiles $profiles = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -145,5 +148,22 @@ use App\Controller\UserController;
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getProfiles(): ?Profiles
+    {
+        return $this->profiles;
+    }
+
+    public function setProfiles(Profiles $profiles): self
+    {
+        // set the owning side of the relation if necessary
+        if ($profiles->getUser() !== $this) {
+            $profiles->setUser($this);
+        }
+
+        $this->profiles = $profiles;
+
+        return $this;
     }
 }
