@@ -13,12 +13,7 @@ use App\Controller\UserController;
 #[ApiResource(
     collectionOperations: [
         'get',
-        'post' =>[
-            'controller' => [UserController::class, 'createUser'],
-            'deserialize' => false,
-            'path' => '/users',
-
-        ],
+        'post',
         'me' => [
             'pagination_enabled' => false,
             'path' => '/me',
@@ -44,7 +39,7 @@ use App\Controller\UserController;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["user:read"])]
+    #[Groups(["user:read", "profile:write", "profile:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
@@ -66,7 +61,9 @@ use App\Controller\UserController;
     private ?string $plainPassword = null;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?Profiles $profiles = null;
+    #[Groups(["user:read"])]
+    private ?Profile $user = null;
+
 
     public function getId(): ?int
     {
@@ -150,20 +147,27 @@ use App\Controller\UserController;
         // $this->plainPassword = null;
     }
 
-    public function getProfiles(): ?Profiles
+    public function getUser(): ?Profile
     {
-        return $this->profiles;
+        return $this->user;
     }
 
-    public function setProfiles(Profiles $profiles): self
+    public function setUser(?Profile $user): self
     {
-        // set the owning side of the relation if necessary
-        if ($profiles->getUser() !== $this) {
-            $profiles->setUser($this);
+        // unset the owning side of the relation if necessary
+        if ($user === null && $this->user !== null) {
+            $this->user->setUser(null);
         }
 
-        $this->profiles = $profiles;
+        // set the owning side of the relation if necessary
+        if ($user !== null && $user->getUser() !== $this) {
+            $user->setUser($this);
+        }
+
+        $this->user = $user;
 
         return $this;
     }
+
+    
 }
