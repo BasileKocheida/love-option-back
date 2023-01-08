@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Interests;
+use App\Entity\Interest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Interests>
+ * @extends ServiceEntityRepository<Interest>
  *
- * @method Interests|null find($id, $lockMode = null, $lockVersion = null)
- * @method Interests|null findOneBy(array $criteria, array $orderBy = null)
- * @method Interests[]    findAll()
- * @method Interests[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Interest|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Interest|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Interest[]    findAll()
+ * @method Interest[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class InterestsRepository extends ServiceEntityRepository
+class InterestRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Interests::class);
+        parent::__construct($registry, Interest::class);
     }
 
-    public function save(Interests $entity, bool $flush = false): void
+    public function save(Interest $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class InterestsRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Interests $entity, bool $flush = false): void
+    public function remove(Interest $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class InterestsRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Interests[] Returns an array of Interests objects
+//     * @return Interest[] Returns an array of Interest objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class InterestsRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Interests
+//    public function findOneBySomeField($value): ?Interest
 //    {
 //        return $this->createQueryBuilder('i')
 //            ->andWhere('i.exampleField = :val')

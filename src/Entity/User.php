@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -21,6 +23,7 @@ use App\Controller\UserController;
             'controller' => [UserController::class, 'me'],
             'read' => false,
             'security' => 'is_granted("ROLE_USER")',
+            'normalization_context'=> ['groups'=>['user:read']],
         ],
     ],
     itemOperations: [
@@ -29,7 +32,7 @@ use App\Controller\UserController;
         'get',
         // recup id user
     ],
-    normalizationContext: ['groups' => 'user:read'],
+ 
     denormalizationContext: ['groups' => 'user:write']
 
     )]
@@ -43,7 +46,7 @@ use App\Controller\UserController;
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(["user:read", "user:write"])]
+    #[Groups(["user:read", "user:write", "profile:read"])]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -62,7 +65,16 @@ use App\Controller\UserController;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     #[Groups(["user:read"])]
-    private ?Profile $user = null;
+    private ?Profile $profile = null;
+
+    #[ORM\ManyToMany(targetEntity: Matches::class, mappedBy: 'user')]
+    #[Groups(["user:read"])]
+    private Collection $matches;
+
+    public function __construct()
+    {
+        $this->matches = new ArrayCollection();
+    }
 
 
     public function getId(): ?int
@@ -147,27 +159,56 @@ use App\Controller\UserController;
         // $this->plainPassword = null;
     }
 
-    public function getUser(): ?Profile
+    public function getProfile(): ?Profile
     {
-        return $this->user;
+        return $this->profile;
     }
 
-    public function setUser(?Profile $user): self
+    public function setProfile(?Profile $profile): self
     {
         // unset the owning side of the relation if necessary
-        if ($user === null && $this->user !== null) {
-            $this->user->setUser(null);
+        if ($profile === null && $this->profile !== null) {
+            $this->profile->setUser(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($user !== null && $user->getUser() !== $this) {
-            $user->setUser($this);
+        if ($profile !== null && $profile->getUser() !== $this) {
+            $profile->setUser($this);
         }
-
-        $this->user = $user;
 
         return $this;
     }
 
+    /**
+     * @return Collection<int, Matches>
+     */
+    public function getMatches(): Collection
+    {
+        return $this->matches;
+    }
+
+    public function addMatch(Matches $match): self
+    {
+        if (!$this->matches->contains($match)) {
+            $this->matches->add($match);
+            $match->addUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMatch(Matches $match): self
+    {
+        if ($this->matches->removeElement($match)) {
+            $match->removeUser($this);
+        }
+
+        return $this;
+    }
+
+    // public function __toString()
+    // {
+    //     return $this->id;
+    // }
     
 }
